@@ -1,0 +1,268 @@
+{
+    "scene": {
+        "event": {
+            "id": "1",
+            "name": "Hiring",
+            "type": "Employee",
+            "description": "Hiring of Employee",
+            "currentStep": 0,
+            "stepToShow": 0,
+            "employeeId": 14,
+            "active": false,
+            "deleted": false,
+            "dateFrom": "0001-01-01T00:00:00",
+            "dateTo": "0001-01-01T00:00:00"
+        },
+        "blocks": [
+            {
+                "id": 1,
+                "eventId": 0,
+                "code": "5004",
+                "x": -652,
+                "y": -40,
+                "name": "inform",
+                "title": "INFORM - Send a message (5004)",
+                "values": {
+                    "property": [
+                        {
+                            "blockTitle": null,
+                            "blockCategory": null,
+                            "blockUri": null,
+                            "blockDate": null,
+                            "blockMessage": {
+                                "blockId": 1,
+                                "label": "Message",
+                                "value": "Welcome Aboard. This is a string.",
+                                "type": ""
+                            },
+                            "blockTarget": null,
+                            "blockResult": null,
+                            "blockType": null,
+                            "blockCode": null,
+                            "blockText": null,
+                            "blockDelay": null
+                        },
+                        {
+                            "blockTitle": null,
+                            "blockCategory": null,
+                            "blockUri": null,
+                            "blockDate": { "blockId": 2, "label": "Date", "value": "Changed to a new string.", "type": "string" },
+                            "blockMessage": null,
+                            "blockTarget": null,
+                            "blockResult": null,
+                            "blockType": null,
+                            "blockCode": null,
+                            "blockText": null,
+                            "blockDelay": null
+                        }
+                    ]
+                },
+                "active": false,
+                "deleted": false,
+                "createdBy": 0,
+                "createdDate": "0001-01-01T00:00:00"
+            },
+            {
+                "id": 2,
+                "eventId": 0,
+                "code": "5001",
+                "x": -407,
+                "y": 51,
+                "name": "upload",
+                "title": "UPLOAD - Attach a file (5001)",
+                "values": {
+                    "property": [
+                        {
+                            "blockTitle": { 
+                                "blockId": 3, "label": "Title", "value": "Upload Certificate", "type": "string" },
+                            "blockCategory": null,
+                            "blockUri": null,
+                            "blockDate": null,
+                            "blockMessage": null,
+                            "blockTarget": null,
+                            "blockResult": null,
+                            "blockType": null,
+                            "blockCode": null,
+                            "blockText": null,
+                            "blockDelay": null
+                        },
+                        {
+                            "blockTitle": null,
+                            "blockCategory": {
+                                "blockId": 4,
+                                "source":"Medical,Police Conduct",
+                                "label": "Category",
+                                "value": "",
+                                "type": "select"
+                            },
+                            "blockUri": null,
+                            "blockDate": null,
+                            "blockMessage": null,
+                            "blockTarget": null,
+                            "blockResult": null,
+                            "blockType": null,
+                            "blockCode": null,
+                            "blockText": null,
+                            "blockDelay": null
+                        },
+                        {
+                            "blockTitle": null,
+                            "blockCategory": null,
+                            "blockUri": { "blockId": 5, "label": "Uri", "value": "This is a string that can be used as a description or it can be removed.", "type": "string" },
+                            "blockDate": null,
+                            "blockMessage": null,
+                            "blockTarget": null,
+                            "blockResult": null,
+                            "blockType": null,
+                            "blockCode": null,
+                            "blockText": null,
+                            "blockDelay": null
+                        },
+                        {
+                            "blockTitle": null,
+                            "blockCategory": null,
+                            "blockUri": null,
+                            "blockDate": { "blockId": 6, "label": "Date", "value": "98765", "type": "date" },
+                            "blockMessage": null,
+                            "blockTarget": null,
+                            "blockResult": null,
+                            "blockType": null,
+                            "blockCode": null,
+                            "blockText": null,
+                            "blockDelay": null
+                        }
+                    ]
+                },
+                "active": false,
+                "deleted": false,
+                "createdBy": 0,
+                "createdDate": "0001-01-01T00:00:00"
+            },
+            {
+                "id": 3,
+                "eventId": 0,
+                "code": "5009",
+                "x": -136,
+                "y": 69,
+                "name": "process_approval",
+                "title": "PROCESS - Get approval (5009)",
+                "values": {
+                    "property": [
+                        {
+                            "blockTitle": null,
+                            "blockCategory": null,
+                            "blockUri": null,
+                            "blockDate": null,
+                            "blockMessage": null,
+                            "blockTarget": { "blockId": 7, "label": "Target", "value": "true", "type": "file" },
+                            "blockResult": null,
+                            "blockType": null,
+                            "blockCode": null,
+                            "blockText": null,
+                            "blockDelay": null
+                        },
+                        {
+                            "blockTitle": null,
+                            "blockCategory": null,
+                            "blockUri": null,
+                            "blockDate": { "blockId": 8, "label": "Date", "value": "5678", "type": "date" },
+                            "blockMessage": null,
+                            "blockTarget": null,
+                            "blockResult": null,
+                            "blockType": null,
+                            "blockCode": null,
+                            "blockText": null,
+                            "blockDelay": null
+                        }
+                    ]
+                },
+                "active": false,
+                "deleted": false,
+                "createdBy": 0,
+                "createdDate": "0001-01-01T00:00:00"
+            },
+            {
+                "id": 4,
+                "eventId": 0,
+                "code": "5010",
+                "x": 113,
+                "y": 67,
+                "name": "process_result",
+                "title": "PROCESS - Result (5010)",
+                "values": {
+                    "property": [
+                        {
+                            "blockTitle": null,
+                            "blockCategory": null,
+                            "blockUri": null,
+                            "blockDate": { "blockId": 10, "label": "Date", "value": "The icon below is showing a pending status. Within a couple of seconds this will change to a different icon mocking a change in the event details received by the server.", "type": "string" },
+                            "blockMessage": null,
+                            "blockTarget": null,
+                            "blockResult": null,
+                            "blockType": null,
+                            "blockCode": null,
+                            "blockText": null,
+                            "blockDelay": null
+                        },
+                        {
+                            "blockTitle": null,
+                            "blockCategory": null,
+                            "blockUri": null,
+                            "blockDate": null,
+                            "blockMessage": null,
+                            "blockTarget": null,
+                            "blockResult": { "blockId": 9, "label": "Result", "value": true, "type": "boolean" },
+                            "blockType": null,
+                            "blockCode": null,
+                            "blockText": null,
+                            "blockDelay": null
+                        }
+                       
+                    ]
+                },
+                "active": false,
+                "deleted": false,
+                "createdBy": 0,
+                "createdDate": "0001-01-01T00:00:00"
+            }
+        ],
+        "links": [
+            {
+                "id": 1,
+                "originID": 1,
+                "originSlot": 0,
+                "targetID": 2,
+                "targetSlot": 0,
+                "active": false,
+                "deleted": false,
+                "createdBy": 0,
+                "createdDate": "0001-01-01T00:00:00"
+            },
+            {
+                "id": 2,
+                "originID": 2,
+                "originSlot": 0,
+                "targetID": 3,
+                "targetSlot": 0,
+                "active": false,
+                "deleted": false,
+                "createdBy": 0,
+                "createdDate": "0001-01-01T00:00:00"
+            },
+            {
+                "id": 3,
+                "originID": 3,
+                "originSlot": 0,
+                "targetID": 4,
+                "targetSlot": 0,
+                "active": false,
+                "deleted": false,
+                "createdBy": 0,
+                "createdDate": "0001-01-01T00:00:00"
+            }
+        ],
+        "container": { "centerX": 100, "centerY": 100, "scale": 1 }
+    }
+
+    
+}

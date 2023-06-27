@@ -14,10 +14,6 @@ const ApplyScreen = ({ navigation }) => {
   const [absenceDataSource, setAbsenceDataSource] = useState([]);
   const [selectedAbsenceType, setSelectedAbsenceType] = useState();
   const getEmployeeLeaveSummary = useApi(absencesApi.getEmployeeLeaveSummary);
-  let initAbsenceDataSource = [
-    { description: 'Vacation Leave', consumed: 5, booked: 3, blocked: 15, balance: 15 },
-    { description: 'Maternity Leave', consumed: 4, booked: 2, blocked: 8, balance: 13 },
-  ];
   const { getEmployeeLeaveSummaryApi, employeeLeaveSummary } = useApply();
 
   const loadAbsenceLeave = async () => {
@@ -25,18 +21,11 @@ const ApplyScreen = ({ navigation }) => {
     const response = await getEmployeeLeaveSummary.request();
     if(response.status == 200){
       if(response?.data){
+        console.log("data1: ")
+        console.log(response.data)
         setAbsenceDataSource(response.data);
       }
     }
-
-    // const tmpCount = await authStorage.getAbsenceLeave();
-    // if (tmpCount != null) {
-    //   let count = JSON.parse(tmpCount);
-    //   initAbsenceDataSource[0].balance -= count.count;
-    //   initAbsenceDataSource[0].booked += count.count;
-    // }
-    //
-    // setAbsenceDataSource(initAbsenceDataSource);
   };
 
   const onPressAbsenceType = (absenceType) => {

@@ -17,7 +17,21 @@ const login = (email, password) => {
       return err;
     });
 };
+const getDomainAndUrl = (email, password) => {
+  return client
+      .get("/GetUrlAndPortByUserCredentialsForMobile", {
+        params: {
+          username: email,
+          password: password,
+        },
+      })
+      .catch((err) => {
+        console.log(err);
+        Sentry.Native.captureException(err);
+        return err;
+      });
+};
 
 export default {
-  login,
+  login, getDomainAndUrl
 };

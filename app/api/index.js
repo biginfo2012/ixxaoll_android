@@ -9,3 +9,4 @@ export { default as profileApi } from "./profile";
 export { default as useAbsencesDummyData } from "./absences-dummy";
 export { default as timesheetApi } from './timesheets';
 export { default as clockingApi } from './clocking';
+export { default as organizationApi } from './organization';

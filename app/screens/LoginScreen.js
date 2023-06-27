@@ -20,11 +20,32 @@ const validationSchema = Yup.object().shape({
 const LoginScreen = (props) => {
   const authContext = useContext(AuthContext);
   const loginApi = useApi(authApi.login);
+  const getDomainAndUrlApi = useApi(authApi.getDomainAndUrl);
 
   const [loginFailed, setLoginFailed] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async ({ username, password }) => {
+    // console.log('handleSubmit')
+    // const resultDomain = await getDomainAndUrlApi.request(username, password);
+    // if (resultDomain?.status == 200) {
+    //   console.log("domainSuccess")
+    //   console.log("BASE_URL:" + global.BASE_URL)
+    //   const data = resultDomain?.data;
+    //   const urlTmp = data?.url;
+    //   console.log("urlTmp: " + urlTmp)
+    //   const port = data?.port;
+    //   if (urlTmp != undefined && urlTmp != null && urlTmp != "") {
+    //     if (isValidIP(urlTmp)) {
+    //       if (port != undefined && port != null && port != "") {
+    //         let baseUrl = "http://" + urlTmp + ":" + port + "/";
+    //         global.BASE_URL = baseUrl;
+    //         console.log("BASE_URL:" + global.BASE_URL)
+    //       }
+    //     }
+    //   }
+    // }
+
     const result = await loginApi.request(username, password);
 
     if (result?.status !== 200) {
@@ -65,6 +86,16 @@ const LoginScreen = (props) => {
     //TODO: show error message when login failed
     //TODO: Add form as scroll view
   };
+
+  const isValidIP = (ip) => {
+    var regEx = new RegExp(
+        "^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\." +
+        "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\." +
+        "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\." +
+        "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+    );
+    return regEx.test(ip);
+  }
 
   return (
     <>

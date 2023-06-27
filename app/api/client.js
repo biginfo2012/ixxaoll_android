@@ -3,9 +3,11 @@ const axios = require('axios').default;
 //http://192.168.50.65:5001/ => dev
 //http://192.168.50.63:5001/ => ixallDemo
 //http://192.168.60.85:5001/ => liptic
+global.BASE_URL = 'http://192.168.2.228:5000/'
+//global.BASE_URL = 'http://192.168.60.85:5001/';
 
 const apiClient = axios.create({
-  baseURL: 'http://192.168.2.228:5000/',
+  baseURL: global.BASE_URL,
   timeout: 5000
 })
 

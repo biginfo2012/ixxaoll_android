@@ -17,7 +17,9 @@ function ApplyAbsenceCalendarScreen({ navigation }) {
   const [absenceListDataSource, setAbsenceListDataSource] = useState([]);
   const [customDateStyles, setCustomDateStyles] = useState([]);
   const [disabledDates, setDisabledDates] = useState([]);
-  const [displayingMonthYear, setDisplayingMonthYear] = useState("");
+  const [displayingMonthYear, setDisplayingMonthYear] = useState(moment());
+  const [selectedStartDate, setSelectedStartDate] = useState(null);
+  const [selectedEndDate, setSelectedEndDate] = useState(null);
   const getEmployeeLeaveRequestList = useApi(absencesApi.getEmployeeLeaveRequestList);
   const {
     //customDateStyles,
@@ -31,32 +33,43 @@ function ApplyAbsenceCalendarScreen({ navigation }) {
 
   useEffect(() => {
     setDisplayingMonthYear(moment());
-    loadEmployeeLeaveRequestList()
+    loadEmployeeLeaveRequestList(displayingMonthYear)
   }, [])
-  const loadEmployeeLeaveRequestList = async () => {
+  const loadEmployeeLeaveRequestList = async (displayingMonthYear) => {
     //TODO: done for demo purposes and should be removed at a later stage
     const response = await getEmployeeLeaveRequestList.request();
     if(response.status == 200){
       if(response?.data){
         let data = response.data;
-
-        let displayingMonthYear = moment()
+        console.log(displayingMonthYear)
+        //let displayingMonthYear = moment()
         const startOfDisplayingMonthYear = moment(displayingMonthYear).startOf("month");
         const endOfDisplayingMonthYear = moment(displayingMonthYear).endOf("month");
         let dD = [];
         let customDates = [];
         const tempRosterDetails = data.filter((a) => {
           const dateFrom = moment(a.dateFrom, "YYYY-MM-DD HH:mm:ss");
-          //const dateTo = moment(a.dateTo, "DD/MM/YYYY");
-          customDates.push({
-            date: moment(a.dateFrom, "YYYY-MM-DD HH:mm:ss").clone(), //TODO: moment can be removed here if main datasource has already been formatted
-            style: { backgroundColor: '#000', borderRadius: 20 },
-            textStyle: { color: "white" },
-            containerStyle: [],
-            allowDisabled: true,
+          const dateTo = moment(a.dateTo, "YYYY-MM-DD HH:mm:ss");
+          // setSelectedStartDate(dateFrom)
+          // setSelectedEndDate(dateTo)
+          // customDates.push({
+          //   date: moment(a.dateFrom, "YYYY-MM-DD HH:mm:ss").clone(), //TODO: moment can be removed here if main datasource has already been formatted
+          //   style: { backgroundColor: '#000', borderRadius: 20 },
+          //   textStyle: { color: "white" },
+          //   containerStyle: [],
+          //   allowDisabled: true,
+          // });
+          let datesArray = getDatesBetween(dateFrom, dateTo);
+          datesArray.forEach(function(date) {
+            customDates.push({
+              date: moment(date, "YYYY-MM-DD HH:mm:ss").clone(), //TODO: moment can be removed here if main datasource has already been formatted
+              style: { backgroundColor: '#f0d199', borderRadius: 20 },
+              textStyle: { color: "white" },
+              containerStyle: [],
+              allowDisabled: true,
+            });
+            dD.push(moment(date, "YYYY-MM-DD HH:mm:ss"))
           });
-
-          dD.push(moment(a.dateFrom, "YYYY-MM-DD HH:mm:ss"))
           return dateFrom.isBetween(startOfDisplayingMonthYear, endOfDisplayingMonthYear, "day");
         });
         setDisabledDates(dD)
@@ -68,9 +81,20 @@ function ApplyAbsenceCalendarScreen({ navigation }) {
   const showListEmptyComponent = () => {
     return <AppListEmptyComponent text={i18n.t('absence.noAbsenceFound')} />;
   };
+  const getDatesBetween = (dateFrom, dateTo) => {
+    var datesArray = [];
+    var currentDate = new Date(dateFrom);
 
+    while (currentDate <= dateTo) {
+      datesArray.push(new Date(currentDate));
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    return datesArray;
+  }
   const showListHeaderComponent = () => {
-    return <AppListHeaderComponent text={`${i18n.t('absence.absencesFor')} ${moment().format('MM/YYYY')}`} />;
+    let displayMonth = displaySelectedMonthYear();
+    return <AppListHeaderComponent text={`${i18n.t('absence.absencesFor')} ${displayMonth}`} />;
   };
 
   const handleDateChange = (date) => {
@@ -86,7 +110,9 @@ function ApplyAbsenceCalendarScreen({ navigation }) {
   };
 
   const handleMonthChange = (date) => {
+    console.log(date)
     setDisplayingMonthYear(date);
+    loadEmployeeLeaveRequestList(date)
   };
 
   const displaySelectedMonthYear = () => {
@@ -101,6 +127,8 @@ function ApplyAbsenceCalendarScreen({ navigation }) {
         allowRangeSelection={false}
         customDatesStyles={customDateStyles}
         disabledDates={disabledDates}
+        // selectedStartDate={selectedStartDate}
+        // selectedEndDate={selectedEndDate}
         onMonthChange={handleMonthChange}
         onDateChange={handleDateChange}
         previousTitle="<"

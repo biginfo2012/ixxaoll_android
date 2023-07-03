@@ -166,6 +166,7 @@ export default {
     startTime: 'Start Time',
     endTime: 'End Time',
     book: 'Book',
+    complete: 'Complete',
     youAreBooking: 'You are booking',
     hoursOfAbsence: 'hours of Absence',
     standard: 'Standard',

@@ -17,12 +17,9 @@ const ApplyScreen = ({ navigation }) => {
   const { getEmployeeLeaveSummaryApi, employeeLeaveSummary } = useApply();
 
   const loadAbsenceLeave = async () => {
-    //TODO: done for demo purposes and should be removed at a later stage
     const response = await getEmployeeLeaveSummary.request();
     if(response.status == 200){
       if(response?.data){
-        console.log("data1: ")
-        console.log(response.data)
         setAbsenceDataSource(response.data);
       }
     }

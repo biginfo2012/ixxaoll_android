@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { StyleSheet, View } from "react-native";
 
-import { AppScreen, AppStatusIcon, AppText } from "app/components";
+import {AppMenuButton, AppScreen, AppStatusIcon, AppText} from "app/components";
 import i18n from "../../constants/i18n";
 import { defaultStyles } from "app/config";
 import {absencesApi} from "../../api";
@@ -11,7 +11,14 @@ function AttendanceVacationLeaveAddDone({ route, navigation }) {
   const getEmployeeLeaveSummary = useApi(absencesApi.getEmployeeLeaveSummary);
   useEffect(() => {
     // navigation.popToTop();
+    loadAbsenceLeave()
     return () => {}; //this handles unmounted component memory leak
+  }, []);
+  useEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => <AppMenuButton/>,
+      headerRight: () => <AppMenuButton onPress={() => handleBook()} title={i18n.t('absence.complete')} />,
+    });
   }, []);
   const loadAbsenceLeave = async () => {
     //TODO: done for demo purposes and should be removed at a later stage
@@ -31,10 +38,15 @@ function AttendanceVacationLeaveAddDone({ route, navigation }) {
           tmp['consumed'] += response.data[i].consumed;
           tmp['blocked'] += response.data[i].blocked;
         }
+        console.log(tmp);
         setAbsenceDataSource(tmp);
       }
     }
   };
+
+  const handleBook = () => {
+    navigation.navigate("ApplyScreen");
+  }
 
   return (
     <AppScreen style={styles.container}>
@@ -58,7 +70,7 @@ function AttendanceVacationLeaveAddDone({ route, navigation }) {
         <View style={styles.row}>
           <View style={styles.rowDetails}>
             <AppText style={[styles.label, styles.labelRight]}>{i18n.t('absence.remaining')}:</AppText>
-            <AppText style={[styles.label, styles.labelLeft]}>{absenceDataSource.consumed}</AppText>
+            <AppText style={[styles.label, styles.labelLeft]}>{absenceDataSource.balance - absenceDataSource.booked}</AppText>
           </View>
         </View>
       </View>

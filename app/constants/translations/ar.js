@@ -3,7 +3,9 @@ export default {
     username: 'اسم المستخدم',
     password: 'كلمة المرور',
     invalid: 'اسم المستخدم و / أو كلمة المرور غير صالحة.',
-    login: 'تسجيل الدخول'
+    login: 'تسجيل الدخول',
+    url: 'وصلة',
+    port: 'ميناء'
   },
   register: {
     name: 'اسم',

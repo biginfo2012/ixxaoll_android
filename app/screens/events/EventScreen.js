@@ -42,6 +42,7 @@ const EventScreen = ({ route, navigation }) => {
 
   //#region handling actions
   const handleFileSelection = async (propertyBlockId, uri, fileName) => {
+    debugger
     let pParts = propertyParts;
     const propertyBlockIndex = pParts.findIndex((propertyBlock) => propertyBlock.item[1].id === propertyBlockId);
 
@@ -54,11 +55,13 @@ const EventScreen = ({ route, navigation }) => {
   };
 
   const handleMainEvent = async () => {
+    debugger
     if (event?.scene?.event?.stepToShow === -1) return;
     save();
   };
 
   const handlePickerSelection = (item, propertyBlockId) => {
+    debugger
     let pParts = propertyParts;
     const propertyBlockIndex = pParts.findIndex((propertyBlock) => propertyBlock.item[1].id === propertyBlockId);
 
@@ -70,6 +73,7 @@ const EventScreen = ({ route, navigation }) => {
   };
 
   const onChangeText = (text, propertyBlockId) => {
+    debugger
     let pParts = propertyParts;
     const propertyBlockIndex = pParts.findIndex((propertyBlock) => propertyBlock.item[1].id === propertyBlockId);
 
@@ -98,14 +102,14 @@ const EventScreen = ({ route, navigation }) => {
     const netInfo = useNetInfo();
     console.log(netInfo.type + "----" + netInfo.isInternetReachable);
 
-    if (netInfo.type !== "unknown" && netInfo.isInternetReachable === false) {
-      return (
-        <View style={styles.horizontalCenter}>
-          <AppText>No internet connection</AppText>
-          <AppStatusIcon status={false} />
-        </View>
-      );
-    }
+    // if (netInfo.type !== "unknown" && netInfo.isInternetReachable === false) {
+    //   return (
+    //     <View style={styles.horizontalCenter}>
+    //       <AppText>No internet connection</AppText>
+    //       <AppStatusIcon status={false} />
+    //     </View>
+    //   );
+    // }
 
     if (!event?.scene?.event) {
       if (!getEventApi.loading) {
@@ -253,6 +257,7 @@ const EventScreen = ({ route, navigation }) => {
 
   //#region loading and saving events
   const loadEvent = async (event) => {
+    debugger
     if (event) {
       setEvent(event);
       parseEvent(event);

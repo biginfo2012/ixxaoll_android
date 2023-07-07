@@ -2,8 +2,17 @@ import * as SecureStore from "expo-secure-store";
 import * as Sentry from 'sentry-expo';
 
 const key = "AuthToken";
+const linkKey = "linkKey";
 const eId = "employeeId";
 
+const storeLink = async (link) => {
+  try {
+    await SecureStore.setItemAsync(linkKey, link);
+  } catch (error) {
+    Sentry.Native.captureException(error);
+    console.log("Error setting the link", error);
+  }
+};
 const storeToken = async (authToken) => {
   try {
     await SecureStore.setItemAsync(key, JSON.stringify(authToken));
@@ -22,6 +31,14 @@ const storeEmployeeId = async (employeeId) => {
   }
 };
 
+const getLink = async () => {
+  try {
+    return await SecureStore.getItemAsync(linkKey);
+  } catch (error) {
+    Sentry.Native.captureException(error);
+    console.log("Error getting the link", error);
+  }
+};
 const getToken = async () => {
   try {
     return await SecureStore.getItemAsync(key);
@@ -219,6 +236,8 @@ const getOrganisation = async () => {
 
 export default {
   getUser,
+  storeLink,
+  getLink,
   storeToken,
   removeToken,
   getVacationLeave,

@@ -3,7 +3,9 @@ export default {
     username: 'Username',
     password: 'Password',
     invalid: 'Invalid username and/or password.',
-    login: 'Login'
+    login: 'Login',
+    url: 'URL: http://xx.xx.xx.xx',
+    port: 'port:xxxx'
   },
   register: {
     name: 'Name',

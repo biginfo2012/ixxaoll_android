@@ -10,6 +10,7 @@ const triggerEventsRequestEndpoint = "RequestEventForEmployeeIdMobileAsync?emplo
 
 const getActiveEvents = async () => {
   const employeeId = await authStorage.getEmployeeId();
+  client.defaults.baseURL = global.BASE_URL;
   return client.get(getActiveEventsEndPoint, { params: { eId: employeeId } }).catch((err) => {
     Sentry.Native.captureException(err);
     return err;
@@ -18,6 +19,7 @@ const getActiveEvents = async () => {
 
 const getEvent = async (inName) => {
   const employeeId = await authStorage.getEmployeeId();
+  client.defaults.baseURL = global.BASE_URL;
   return client.get(getEventEndPoint, { params: { employeeId: employeeId, inName: inName } }).catch((err) => {
     Sentry.Native.captureException(err);
     return err;
@@ -26,6 +28,7 @@ const getEvent = async (inName) => {
 };
 
 const saveEvent = (event) => {
+  client.defaults.baseURL = global.BASE_URL;
   return client.post(saveEventEndPoint, event).catch((err) => {
     Sentry.Native.captureException(err);
     console.log(err);
@@ -36,7 +39,7 @@ const saveEvent = (event) => {
 const triggerEventRequest = async (eventName) => {
 
 const endpoint = triggerEventsRequestEndpoint + eventName;
-
+  client.defaults.baseURL = global.BASE_URL;
   return client
     .post(endpoint, eventName)
     .then((res) => {
@@ -56,7 +59,7 @@ const uploadFile = async (blockIds, eventId, uri, fileName, controller) => {
   data.append("eventId", eventId.toString());
   data.append("blockIds", blockIds.toString());
   data.append("eventFiles", { uri: uri, type: "application/pdf", name: fileName });
-
+  client.defaults.baseURL = global.BASE_URL;
   return client
     .post(uploadFileEndPoint, data, {
       headers: { Accept: "application/json", "Content-Type": "multipart/form-data" },

@@ -6,6 +6,7 @@ const getCurrentClockingEndpoint = "timeAndAttendance/timeManagement/GetCurrentC
 const setClockingActionEndpoint = "timeAndAttendance/timeManagement/SetEmployeeClockingActionAsync";
 
 const getCurrentClockingDetails = async () => {
+  client.defaults.baseURL = global.BASE_URL;
   return client.get(getCurrentClockingEndpoint).catch((err) => {
     Sentry.Native.captureException(err);
     return err;
@@ -13,6 +14,7 @@ const getCurrentClockingDetails = async () => {
 };
 
 const setEmployeeClockingAction = async (body) => {
+    client.defaults.baseURL = global.BASE_URL;
     return client.post(setClockingActionEndpoint, body).catch((err) => {
         Sentry.Native.captureException(err);
         return err;

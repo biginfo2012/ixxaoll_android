@@ -18,7 +18,7 @@ import * as Sentry from 'sentry-expo';
 
 
 Sentry.init({
-  dsn: 'https://4a9de68af56046a09a5545cf8e3b71f9@o4504922679869440.ingest.sentry.io/4504922688454656',
+  dsn: 'https://79d830e4a9f14849b00b53a641103cfc@o4505515973672960.ingest.sentry.io/4505515980750848',
   enableInExpoDevelopment: true,
   debug: true, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
   tracesSampleRate: 1.0

@@ -14,7 +14,7 @@ import package_json from "ixxoll-app/package.json";
 const ProfileUserScreen = ({ route, navigation }) => {
   const { logout } = useAuth();
 
-  const getProfileApi = useApi(profileApi.getProfileDefaults);
+  const getProfileApi = useApi(profileApi.getProfileDetails);
 
   /* This is repeated code found in ProfileUserScreen.js. This should be fixed. */
 
@@ -23,11 +23,11 @@ const ProfileUserScreen = ({ route, navigation }) => {
 
   const getProfileDetails = async () => {
     //GET User Profiles from storage for quick retrieval
-    const profileDetails = await authStorage.getProfileDetails();
-    setProfile(profileDetails);
-
+    // const profileDetails = await authStorage.getProfileDetails();
+    // setProfile(profileDetails);
+    debugger
     const profileDefaults = await getProfileApi.request();
-    setProfileDefaults(profileDefaults.data || {});
+    setProfileDefaults(profileDefaults.data);
   };
 
   useEffect(() => {
@@ -72,13 +72,13 @@ const ProfileUserScreen = ({ route, navigation }) => {
           <View style={styles.row}>
             <View style={styles.rowDetails}>
               <AppText style={[styles.label, styles.labelRight]}>{i18n.t("profile.username")}:</AppText>
-              <AppText style={styles.label}>{profileDefaults?.username || ""}</AppText>
+              <AppText style={styles.label}>{profileDefaults?.name && `${profileDefaults?.name ?? ""} ${profileDefaults?.surname || ""}`}</AppText>
             </View>
           </View>
           <View style={styles.row}>
             <View style={styles.rowDetails}>
               <AppText style={[styles.label, styles.labelRight]}>{i18n.t("profile.domain")}:</AppText>
-              <AppText style={styles.label}>{profileDefaults?.domain || ""}</AppText>
+              <AppText style={styles.label}>{global.DOMAIN}</AppText>
             </View>
           </View>
           <View style={styles.row}>

@@ -9,7 +9,7 @@ const Stack = createNativeStackNavigator();
 const AuthNavigator = () => (
   <Stack.Navigator>
     <Stack.Screen
-      name="IXXOLL for Mobile"
+      name="i-XALL for Mobile"
       component={LoginScreen}
       options={{
         headerShown: true,

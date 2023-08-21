@@ -18,12 +18,6 @@ const EmployeeBoards = ({ navigation, visible, boards }) => {
 
   const loadEmployeeBoards = async () => {
     const response = await getEmployeeBoardAPI.request();
-
-    // let data = [];
-    // for (let i = 0; i < 10; i++) {
-    //   data.push(response.data[0]);
-    // }
-
     setEmployeeBoards(response.data);
     // setRefreshing(false);
   };

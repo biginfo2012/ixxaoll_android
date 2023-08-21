@@ -18,12 +18,20 @@ const ApplyScreen = ({ navigation }) => {
 
   const loadAbsenceLeave = async () => {
     const response = await getEmployeeLeaveSummary.request();
+    debugger
     if(response.status == 200){
       if(response?.data){
         setAbsenceDataSource(response.data);
       }
     }
   };
+
+  const onPressAddAbsence = () => {
+    debugger
+    if(absenceDataSource.length){
+      navigation.navigate("AttendanceVacationLeaveAddStep1")
+    }
+  }
 
   const onPressAbsenceType = (absenceType) => {
     setSelectedAbsenceType(absenceType);
@@ -53,7 +61,7 @@ const ApplyScreen = ({ navigation }) => {
         <AppButton
           style={[styles.callToAction, { marginRight: 5 }]}
           title={i18n.t('absence.addAbsence')}
-          onPress={() => navigation.navigate("AttendanceVacationLeaveAddStep1")}
+          onPress={() => onPressAddAbsence()}
         ></AppButton>
         <AppButton
           style={[styles.callToAction, { marginLeft: 5 }]}

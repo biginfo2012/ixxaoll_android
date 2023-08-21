@@ -10,7 +10,7 @@ function ListItem({ title, description, additionalText, image, IconComponent, sh
     <TouchableHighlight underlayColor={defaultStyles.colors.light} onPress={onPress}>
       <View style={[styles.container, showBackground ? styles.backgroundColorWhite : null]}>
         {IconComponent}
-        {image && <Image style={styles.image} source={{ uri: "data:image/jpg;base64," + image }} />}
+        {image && <Image style={styles.image} source={{ uri: global.BASE_URL + image }} />}
 
         <View>
           {/* {leftBorderColor && <View style={{leftBorderColor: leftBorderColor, borderLeftWidth: 5}}></View>} */}

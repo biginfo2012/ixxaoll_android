@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import moment from "moment";
 import authStorage from "../auth/storage";
+import {timesheetApi} from "app/api";
 
 export default useTimesheetsApproval = () => {
   const timesheetsDetailDummy = [
@@ -63,9 +64,12 @@ export default useTimesheetsApproval = () => {
   ];
   const [employees, setEmployees] = useState([]);
 
+  const getShiftRosterEmployeeTimeSheetRequestsAsync = useApi(timesheetApi.getShiftRosterEmployeeTimeSheetRequestsAsync);
+
   useEffect(() => {
     
     const getEmployees = async () => {
+      const response = await getShiftRosterEmployeeTimeSheetRequestsAsync.request(body);
 
       setEmployees([
         {

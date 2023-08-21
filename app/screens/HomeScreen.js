@@ -110,7 +110,7 @@ const HomeScreen = ({ route, navigation }) => {
             <View style={styles.profileBannerContainer}>
               <View style={styles.profile}>
                 <View style={styles.profileText}>
-                  <AppText style={styles.text}>{profile?.employeeNo && `Employee ${profile?.employeeNo}`}</AppText>
+                  <AppText style={styles.text}>{`Employee No ${profile?.employeeNo || profile.employeeNo == 0 ? "Not Set" : profile.employeeNo}`}</AppText>
                   <AppText style={styles.text}>
                     {profile?.name && `${profile?.name ?? ""} ${profile?.surname ?? ""}`}
                   </AppText>
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   segmentedControl: {
-    padding: 5,
+    padding: 0,
   },
   text: {
     color: defaultStyles.colors.medium,

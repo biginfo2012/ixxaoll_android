@@ -50,7 +50,7 @@ const ProfileDetailsScreen = ({ route, navigation }) => {
           <View style={styles.profileDetailed}>
             <View style={styles.profileDetailedText}>
               <AppText style={[defaultStyles.centerText, styles.text]}>DataTech Consulting Limited</AppText>
-              <AppText style={[defaultStyles.centerText, styles.text]}>{profile?.employeeNo && `Employee ${profile?.employeeNo}`}</AppText>
+              <AppText style={[defaultStyles.centerText, styles.text]}>{`Employee ${profile?.employeeNo || profile.employeeNo == 0 ? "Not Set" : profile.employeeNo}`}</AppText>
               <AppText style={[defaultStyles.centerText, styles.text]}>{profile?.name && `${profile?.name ?? ""} ${profile?.surname ?? ""}`}</AppText>
               <AppText style={[defaultStyles.centerText, styles.text]}>{displayPosition(profile?.positions) ?? ""}</AppText>
               <View style={defaultStyles.spaceSeparator}></View>

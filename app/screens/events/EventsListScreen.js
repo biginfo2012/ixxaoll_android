@@ -23,6 +23,7 @@ const EventsListScreen = ({ navigation }) => {
   }, []);
 
   const loadEvents = async () => {
+    debugger
     const response = await eventsApi.getActiveEvents();
     setEvents(response.data);
 

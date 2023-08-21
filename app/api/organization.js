@@ -6,6 +6,7 @@ const GetActiveOrganizationalChartsThumbnailsEndPoint = "GetActiveOrganizational
 const GetActiveOrganizationalChartByGUIDEndPoint = "GetActiveOrganizationalChartByGUID";
 
 const getActiveOrganizationalChartsThumbnails = async () => {
+    client.defaults.baseURL = global.BASE_URL;
     return client.get(GetActiveOrganizationalChartsThumbnailsEndPoint).catch((err) => {
         Sentry.Native.captureException(err);
         return err;
@@ -13,6 +14,7 @@ const getActiveOrganizationalChartsThumbnails = async () => {
 };
 
 const getActiveOrganizationalChartByGUID = async (inGUID) => {
+    client.defaults.baseURL = global.BASE_URL;
     return client.get(GetActiveOrganizationalChartByGUIDEndPoint, { params: { inGUID: inGUID } }).catch((err) => {
         Sentry.Native.captureException(err);
         return err;

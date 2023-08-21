@@ -16,6 +16,23 @@ const _ = require("lodash");
 const forwardButtonTitle = "Continue";
 //TODO: Handle blocks that have nothing to show/save
 //TODO: Abort save and get event controller (axios)
+const medicalRecords = [
+  {
+    value: 1,
+    label: "Medical Records",
+    key: ""
+  },
+  {
+    value: 2,
+    label: "Outputs of the System",
+    key: ""
+  },
+  {
+    value: 3,
+    label: "Other",
+    key: ""
+  },
+]
 
 const EventScreen = ({ route, navigation }) => {
   const { eventName } = route.params;
@@ -29,6 +46,7 @@ const EventScreen = ({ route, navigation }) => {
   const [event, setEvent] = useState([]);
   const [propertyParts, setPropertyParts] = useState([]);
   const [invalidPropertyParts, setInvalidPropertyParts] = useState([]);
+  const [selectMedicalRecord, setSelectMedicalRecord] = useState();
 
   const { windowWidth } = useWindowDimensions();
 
@@ -42,7 +60,6 @@ const EventScreen = ({ route, navigation }) => {
 
   //#region handling actions
   const handleFileSelection = async (propertyBlockId, uri, fileName) => {
-    debugger
     let pParts = propertyParts;
     const propertyBlockIndex = pParts.findIndex((propertyBlock) => propertyBlock.item[1].id === propertyBlockId);
 
@@ -61,19 +78,18 @@ const EventScreen = ({ route, navigation }) => {
   };
 
   const handlePickerSelection = (item, propertyBlockId) => {
-    debugger
-    let pParts = propertyParts;
-    const propertyBlockIndex = pParts.findIndex((propertyBlock) => propertyBlock.item[1].id === propertyBlockId);
-
-    let obj = pParts[propertyBlockIndex];
-    obj.item[1].value = item.value;
-    pParts[propertyBlockIndex] = obj;
-
-    setPropertyParts([...pParts]);
+    setSelectMedicalRecord(item.value)
+    // let pParts = propertyParts;
+    // const propertyBlockIndex = pParts.findIndex((propertyBlock) => propertyBlock.item[1].id === propertyBlockId);
+    //
+    // let obj = pParts[propertyBlockIndex];
+    // obj.item[1].value = item.value;
+    // pParts[propertyBlockIndex] = obj;
+    //
+    // setPropertyParts([...pParts]);
   };
 
   const onChangeText = (text, propertyBlockId) => {
-    debugger
     let pParts = propertyParts;
     const propertyBlockIndex = pParts.findIndex((propertyBlock) => propertyBlock.item[1].id === propertyBlockId);
 
@@ -87,6 +103,7 @@ const EventScreen = ({ route, navigation }) => {
 
   //#region UI
   const buildMainActionUI = () => {
+    debugger
     if (event?.scene?.event?.stepToShow !== event?.scene?.event?.currentStep) {
       return (
         <View style={styles.eventButtonContainer}>
@@ -99,6 +116,7 @@ const EventScreen = ({ route, navigation }) => {
 
   const buildUI = () => {
     //TODO: This should be done outside of a component level
+    debugger
     const netInfo = useNetInfo();
     console.log(netInfo.type + "----" + netInfo.isInternetReachable);
 
@@ -152,9 +170,9 @@ const EventScreen = ({ route, navigation }) => {
   };
 
   const createUIElement = (propertyPart) => {
+    debugger
     let propertyPartValue = propertyPart.item[1];
     let propertyBlockIndex = propertyPart.propertyBlockIndex;
-
     switch (propertyPartValue.type) {
       case "boolean":
         return (
@@ -189,16 +207,16 @@ const EventScreen = ({ route, navigation }) => {
         //TODO: MASSIVE UGLY HACK FOR DEMO PURPOSES
 
         //rest of the code
-        let source = createSelectDataSource(propertyPartValue.selectDataSource);
+        //let source = createSelectDataSource(propertyPartValue.selectDataSource);
         return (
           <>
             <AppPicker
               propertyBlockId={propertyPartValue.id}
               propertyBlockIndex={propertyBlockIndex}
-              selectedItem={propertyParts.find((x) => x.item[1].id === propertyPartValue.id)?.item[1]?.value}
+              selectedItem={medicalRecords.find((x) => x.value == selectMedicalRecord)?.label}
               onSelectItem={(item, propertyBlockId, propertyBlockIndex) => handlePickerSelection(item, propertyBlockId, propertyBlockIndex)}
-              items={source}
-              placeholder={propertyPartValue.label}
+              items={medicalRecords}
+              // placeholder={propertyPartValue.label}
               disabled={event?.scene?.event?.stepToShow === -1}
             />
 
@@ -208,19 +226,19 @@ const EventScreen = ({ route, navigation }) => {
             />
           </>
         );
-      case "string":
-        return (
-          <>
-            <AppText>{propertyPartValue.label}</AppText>
-            <AppTextInput
-              autoCapitalize="sentences"
-              multiline={false}
-              editable={event?.scene?.event?.stepToShow !== -1}
-              value={propertyPartValue.value}
-              onChangeText={(text) => onChangeText(text, propertyPartValue.id)}
-            />
-          </>
-        );
+      // case "string":
+      //   return (
+      //     <>
+      //       <AppText>{propertyPartValue.label}</AppText>
+      //       <AppTextInput
+      //         autoCapitalize="sentences"
+      //         multiline={false}
+      //         editable={event?.scene?.event?.stepToShow !== -1}
+      //         value={propertyPartValue.value}
+      //         onChangeText={(text) => onChangeText(text, propertyPartValue.id)}
+      //       />
+      //     </>
+      //   );
       case "number":
         if (["Employee Id", "User Id"].includes(propertyPartValue.label)) {
           break;
@@ -247,7 +265,6 @@ const EventScreen = ({ route, navigation }) => {
 
   const paintUI = () => {
     const elements = [];
-
     for (var i = 0; i < propertyParts.length; i++) {
       elements.push(createUIElement(propertyParts[i]));
     }
@@ -269,15 +286,14 @@ const EventScreen = ({ route, navigation }) => {
   };
 
   const parseEvent = (rawEvent) => {
+    debugger
     let parts = [];
 
     if (!rawEvent) {
       setPropertyParts([...parts]);
       return;
     }
-
     let stepToShow = [-1, -2].includes(rawEvent.scene.event.stepToShow) ? rawEvent.scene.event.currentStep : rawEvent.scene.event.stepToShow;
-
     if (rawEvent && rawEvent.scene && rawEvent.scene.blocks && rawEvent.scene.blocks.length > 0) {
       for (var propertyBlockIndex = 0; propertyBlockIndex < rawEvent.scene.blocks[stepToShow].values.property.length; propertyBlockIndex++) {
         Object.entries(rawEvent.scene.blocks[stepToShow].values.property[propertyBlockIndex]).map((item) => {
@@ -297,17 +313,16 @@ const EventScreen = ({ route, navigation }) => {
   };
 
   const save = async () => {
-    if (!validInputs()) {
-      return;
-    }
-
+    // if (!validInputs()) {
+    //   return;
+    // }
     let hasFileUpload = false;
     let valuesToSave = [];
 
     propertyParts.forEach((p) => {
       let obj = {
         id: p.item[1].id,
-        value: p.item[1].type === "select" ? p.item[1].value.trim() : p.item[1].value ?? "",
+        value: p.item[1].type === "select" ? medicalRecords : p.item[1].value ?? "",
         type: p.item[1].type,
       };
       valuesToSave.push(obj);
@@ -336,7 +351,6 @@ const EventScreen = ({ route, navigation }) => {
       }
       console.log("File Upload SUCCESS !");
     }
-
     let savedObj = {
       id: event.scene.event.id,
       name: event.scene.event.name,

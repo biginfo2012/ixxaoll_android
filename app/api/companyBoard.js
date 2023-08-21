@@ -8,6 +8,7 @@ const SaveCompanyBoardById = "SaveCompanyBoardById";
 
 const getCompanyBoards = async () => {
   const employeeId = await authStorage.getEmployeeId();
+  client.defaults.baseURL = global.BASE_URL;
   return client.get(getCompanyBoardsEndPoint, { params: { eId: employeeId } }).catch((err) => {
     Sentry.Native.captureException(err);
     return err;
@@ -16,6 +17,7 @@ const getCompanyBoards = async () => {
 
 const getCompanyBoardsByEmployee = async () => {
   const employeeId = await authStorage.getEmployeeId();
+  client.defaults.baseURL = global.BASE_URL;
   return client.get(getCompanyBoardsById, { params: { eId: employeeId } }).catch((err) => {
     Sentry.Native.captureException(err);
     return err;
@@ -23,6 +25,7 @@ const getCompanyBoardsByEmployee = async () => {
 };
 
 const saveCompanyBoardById = async (body) => {
+  client.defaults.baseURL = global.BASE_URL;
   return client.post(SaveCompanyBoardById, body).catch((err) => {
     Sentry.Native.captureException(err);
     return err;

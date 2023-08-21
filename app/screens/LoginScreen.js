@@ -27,6 +27,7 @@ const LoginScreen = (props) => {
     const authContext = useContext(AuthContext);
     const loginApi = useApi(authApi.login);
     const getDomainAndUrlApi = useApi(authApi.getDomainAndUrl);
+    const getDomainsAsync = useApi(authApi.getDomainsAsync);
     const [keyboardHeight, setKeyboardHeight] = useState(0);
 
     const [loginSuccess, setLoginSuccess] = useState(false);
@@ -62,10 +63,13 @@ const LoginScreen = (props) => {
 
     const handleSubmit = async ({username, password, url, port}) => {
         let orginBaseUrl = global.BASE_URL
-        let baseUrl = url + ":" + port + "/";
+        let baseUrl = url + ':' + port + '/';
+        debugger
         global.BASE_URL = baseUrl;
+        const result1 = await getDomainsAsync.request();
+        let domain = result1.data[0]
+        global.DOMAIN = domain
         const result = await loginApi.request(username, password);
-
         if (result?.status !== 200) {
             setErrorMessage("Invalid username and/or password.");
             global.BASE_URL = orginBaseUrl;
@@ -90,10 +94,10 @@ const LoginScreen = (props) => {
         //   return setLoginFailed(true);
         // }
 
-        // if (user?.employeeId === 0) {
-        //   setErrorMessage('Login failed.');
-        //   return setLoginFailed(true);
-        // }
+        if (user?.employeeId === 0) {
+          setErrorMessage('Login failed.');
+          return setLoginFailed(true);
+        }
 
         // // const user = jwtDecode(result.data);
 
@@ -109,7 +113,7 @@ const LoginScreen = (props) => {
     const handleSubmitOrigin = async ({username, password}) => {
         let orginBaseUrl = global.BASE_URL
         const result = await loginApi.request(username, password);
-
+        debugger
         if (result?.status !== 200) {
             setErrorMessage("Invalid username and/or password.");
             global.BASE_URL = orginBaseUrl;
@@ -133,10 +137,10 @@ const LoginScreen = (props) => {
         //   return setLoginFailed(true);
         // }
 
-        // if (user?.employeeId === 0) {
-        //   setErrorMessage('Login failed.');
-        //   return setLoginFailed(true);
-        // }
+        if (user?.employeeId === 0) {
+          setErrorMessage('Login failed.');
+          return setLoginFailed(true);
+        }
 
         // // const user = jwtDecode(result.data);
 

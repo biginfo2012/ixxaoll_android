@@ -16,6 +16,7 @@ const getAbsences = async () => {
   }
 
   const employeeId = await authStorage.getEmployeeId();
+  client.defaults.baseURL = global.BASE_URL;
   return client.get(getAbsencesByEmployeeIdEndPoint, { params: { eId: employeeId } }).catch((err) => {
     Sentry.Native.captureException(err);
     return err;
@@ -24,6 +25,7 @@ const getAbsences = async () => {
 
 const getEmployeeLeaveSummary = async () => {
   const employeeId = await authStorage.getEmployeeId();
+  client.defaults.baseURL = global.BASE_URL;
   return client.get(getEmployeeLeaveSummaryEndPoint, { params: { eId: employeeId } }).catch((err) => {
     Sentry.Native.captureException(err);
     return err;
@@ -31,6 +33,7 @@ const getEmployeeLeaveSummary = async () => {
 }
 const getEmployeeLeaveRequestList = async () => {
   const employeeId = await authStorage.getEmployeeId();
+  client.defaults.baseURL = global.BASE_URL;
   return client.get(getEmployeeLeaveRequestListEndPoint, { params: { eId: employeeId } }).catch((err) => {
     Sentry.Native.captureException(err);
     return err;
@@ -62,6 +65,7 @@ const saveEmployeeLeave = (employeeId, dateFrom, dateTo, startTime, endTime, rea
       hours: hours == "" ? 0 : hours,
       leaveFile : ""
     };
+    client.defaults.baseURL = global.BASE_URL;
     return client.post(saveEmployeeLeaveEndPoint, body, {
           headers: {
             'Content-Type': 'application/json'
@@ -71,7 +75,7 @@ const saveEmployeeLeave = (employeeId, dateFrom, dateTo, startTime, endTime, rea
       return err;
     });
   }
-
+  client.defaults.baseURL = global.BASE_URL;
   return client
       .post(saveEmployeeLeaveWithAttachmentEndPoint, data, {
         headers: { Accept: "application/json", "Content-Type": "multipart/form-data" },

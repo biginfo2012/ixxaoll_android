@@ -15,7 +15,7 @@ const saveBoardWithFile = async (title, message, eventDate, uri, fileName, mimeT
   data.append("message", message);
   data.append("eventDate", moment(eventDate).format("DD/MM/YYYY"));
   data.append("file", { uri: uri, type: mimeType, name: fileName }); //TODO: accept more than jpegs
-
+  client.defaults.baseURL = global.BASE_URL;
   return client
     .post(saveBoardWithFileEndpoint, data, {
       headers: { Accept: "application/json", "Content-Type": "multipart/form-data" },

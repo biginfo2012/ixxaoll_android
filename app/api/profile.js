@@ -7,10 +7,10 @@ const getProfileDefaultsByIdEndPoint = "GetProfileDefaultsByEmployeeIdAsync";
 const getDomainsDataSourceEndPoint = "GetDomainsAsync";
 const getCompaniesByDomainEndPoint = "GetCompaniesByDomainNameAsync";
 const getUserDomainAndCompanyEndpoint = "GetDomainAndCompanyByEmployeeIdAsync";
-
 // const employeeId = await authStorage.getUser();
 const getProfileDetails = async () => {
   const employeeId = await authStorage.getEmployeeId();
+  client.defaults.baseURL = global.BASE_URL;
   return client.get(getEmployeeDetailsByIdEndPoint, { params: { eId: employeeId } }).catch((err) => {
     Sentry.Native.captureException(err);
     return err;
@@ -19,6 +19,7 @@ const getProfileDetails = async () => {
 
 const getProfileDefaults = async () => {
   const employeeId = await authStorage.getEmployeeId();
+  client.defaults.baseURL = global.BASE_URL;
   return client.get(getProfileDefaultsByIdEndPoint, { params: { eId: employeeId } }).catch((err) => {
     Sentry.Native.captureException(err);
     return err;
@@ -26,6 +27,7 @@ const getProfileDefaults = async () => {
 };
 
 const getDomainsDataSource = async () => {
+  client.defaults.baseURL = global.BASE_URL;
   return client.get(getDomainsDataSourceEndPoint).catch((err) => {
     Sentry.Native.captureException(err);
     return err;
@@ -33,6 +35,7 @@ const getDomainsDataSource = async () => {
 };
 
 const getCompaniesByDomainDataSource = async (domain) => {
+  client.defaults.baseURL = global.BASE_URL;
   return client.get(getCompaniesByDomainEndPoint, { params: { domain: domain } }).catch((err) => {
     Sentry.Native.captureException(err);
     return err;
@@ -41,6 +44,7 @@ const getCompaniesByDomainDataSource = async (domain) => {
 
 const getUserDomainAndCompany = async () => {
   const employeeId = await authStorage.getEmployeeId();
+  client.defaults.baseURL = global.BASE_URL;
   return client.get(getUserDomainAndCompanyEndpoint, { params: { employeeId: employeeId } }).catch((err) => {
     Sentry.Native.captureException(err);
     return err;

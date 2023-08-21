@@ -15,7 +15,7 @@ import {
 import {AppText, AppScreen, AppIcon, AppButton, AppSimplePicker} from "app/components";
 
 import { defaultStyles } from "app/config";
-import PROFILE from 'app/assets/testman.jpg';
+import PROFILE from 'app/assets/user.png';
 import {organizationApi} from "app/api";
 import {useApi} from "app/hooks";
 
@@ -122,8 +122,9 @@ const OrganisationScreen = ({ navigation }) => {
       let thumbnails  = response.data
       if(thumbnails != null){
         for(let i = 0; i < thumbnails.length; i++){
-          if(thumbnails[i]['isActive']){
+          if(thumbnails[i]['isDefault']){
             let inGuid = thumbnails[i]['guid']
+            console.log(inGuid)
             const res = await getActiveOrganizationalChartByGUID.request(inGuid)
             if(res?.data){
               let chart = res.data.chart
@@ -158,7 +159,7 @@ const OrganisationScreen = ({ navigation }) => {
     else{
       result['name'] = data?.name
     }
-    result['image'] = data?.employees.length ? data?.employees?.[0]?.photo : null
+    result['image'] = data?.employees.length ? global.BASE_URL + data?.employees?.[0]?.photo : null
     result['positions'] = data?.positions?.length
     result['employeeCnt'] = data?.employees?.length
     result['color'] = data?.color
@@ -175,7 +176,8 @@ const OrganisationScreen = ({ navigation }) => {
       <View style={styles.secondContent}>
         <TouchableOpacity key={index} onPress={() => onPressItem(item)}>
           <View style={styles.profileContainer}>
-            <Image source={PROFILE} style={styles.image}/>
+            {item.image ? ( <Image source={{uri: item.image}} style={styles.image} />)
+                : ( <Image source={PROFILE} style={styles.image} />)}
             <View style={styles.lineBar} backgroundColor={item.color}></View>
           </View>
       </TouchableOpacity>
@@ -222,7 +224,9 @@ const OrganisationScreen = ({ navigation }) => {
             }]}>
               <View style={styles.profileContainer}>
                 <TouchableOpacity onPress={() => handleGoBack(item)}>
-                  <Image source={PROFILE} style={styles.image} />
+                  {item.image ? ( <Image source={{uri: item.image}} style={styles.image} />)
+                  : ( <Image source={PROFILE} style={styles.image} />)}
+
                   <View style={styles.lineBar} backgroundColor={item.color}></View>
                 </TouchableOpacity>
             <TouchableHighlight onPress={() => onPressUser(item)} underlayColor={defaultStyles.colors.veryLightGray}>
